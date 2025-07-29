@@ -1,0 +1,49 @@
+/* Fix para Leaflet CSS */
+@import 'leaflet/dist/leaflet.css';
+
+/* Garantir que o mapa tenha tamanho */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  position: relative !important;
+}
+
+/* Fix para ícones do Leaflet */
+.leaflet-default-icon-path {
+  background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png');
+}
+
+/* Garantir que tiles carreguem */
+.leaflet-tile {
+  max-width: none !important;
+}
+
+/* Fix para controles */
+.leaflet-control-container {
+  position: relative !important;
+}
+
+/* Garantir z-index correto */
+.leaflet-map-pane {
+  z-index: 1 !important;
+}
+
+.leaflet-tile-pane {
+  z-index: 1 !important;
+}
+
+.leaflet-overlay-pane {
+  z-index: 2 !important;
+}
+
+.leaflet-marker-pane {
+  z-index: 3 !important;
+}
+
+.leaflet-popup-pane {
+  z-index: 4 !important;
+}
+
+.leaflet-control-pane {
+  z-index: 5 !important;
+}

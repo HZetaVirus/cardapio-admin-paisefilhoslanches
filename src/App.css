@@ -1,0 +1,78 @@
+/* Reset de alguns estilos para melhor responsividade */
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Estilos responsivos para formulários e cards */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+  }
+  
+  /* Melhorar espaçamento em dispositivos móveis */
+  .py-6 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  /* Garantir que botões e elementos interativos tenham tamanho adequado para toque */
+  button, .button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Garantir que os formulários sejam bem dimensionados */
+  input, select, textarea {
+    font-size: 16px !important; /* Evitar zoom no iOS */
+  }
+}
+
+/* Estilos para dispositivos muito pequenos */
+@media (max-width: 360px) {
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  h1, h2, h3 {
+    hyphens: auto;
+  }
+}
+
+/* Suporte para notch e áreas seguras em dispositivos iOS */
+@supports (padding: max(0px)) {
+  .safe-area-inset-bottom {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-area-inset-top {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+  }
+  
+  .fixed-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

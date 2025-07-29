@@ -1,0 +1,91 @@
+@layer base {
+  :root {
+    /* Safe area insets */
+    --sat: env(safe-area-inset-top);
+    --sar: env(safe-area-inset-right);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+  }
+
+  /* Prevenir comportamentos indesejados em dispositivos móveis */
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: 100%;
+    height: -webkit-fill-available;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overflow-x: hidden;
+    /* Prevenir pull-to-refresh em iOS */
+    overscroll-behavior-y: none;
+  }
+
+  /* Ajustes para notch e barras de sistema */
+  .safe-area-top {
+    padding-top: var(--sat);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: var(--sab);
+  }
+
+  /* Classes utilitárias para responsividade */
+  .h-screen-safe {
+    height: calc(100vh - var(--sat) - var(--sab));
+  }
+
+  .max-h-screen-safe {
+    max-height: calc(100vh - var(--sat) - var(--sab));
+  }
+
+  /* Fix para inputs em iOS */
+  input, textarea {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  /* Melhor suporte para scroll em iOS */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevenção de zoom em inputs em iOS */
+  @media screen and (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
+}
+
+/* Classes responsivas personalizadas */
+@layer utilities {
+  .landscape-only {
+    @media (orientation: portrait) {
+      display: none;
+    }
+  }
+
+  .portrait-only {
+    @media (orientation: landscape) {
+      display: none;
+    }
+  }
+
+  /* Grid responsivo automático */
+  .auto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1rem;
+  }
+
+  /* Container responsivo com padding seguro */
+  .safe-container {
+    padding-left: max(1rem, var(--sal));
+    padding-right: max(1rem, var(--sar));
+  }
+}

@@ -1,0 +1,44 @@
+/* Estilos específicos para o Leaflet */
+@import 'leaflet/dist/leaflet.css';
+
+/* Correções para ícones do Leaflet */
+.leaflet-default-icon-path {
+  background-image: url('https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png');
+}
+
+/* Estilos customizados para o mapa */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px;
+  line-height: 1.4;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 640px) {
+  .leaflet-control-zoom {
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+  
+  .leaflet-control-attribution {
+    font-size: 10px;
+  }
+}
+
+/* Estilos para marcadores personalizados */
+.restaurant-marker {
+  filter: hue-rotate(30deg) saturate(1.5);
+}
+
+.customer-marker {
+  filter: hue-rotate(120deg) saturate(1.2);
+}
