@@ -2,6 +2,8 @@
 import { useApp } from "@/contexts/AppContext";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
+import PWAInstallButton from "@/components/PWAInstallButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface AdminHeaderProps {
   onLogout?: () => void;
@@ -26,15 +28,19 @@ export default function AdminHeader({ onLogout }: AdminHeaderProps) {
           </p>
         )}
       </div>
-      <Button 
-        onClick={handleLogout} 
-        variant="outline" 
-        size="sm"
-        className="flex items-center gap-2"
-      >
-        <LogOut size={16} />
-        Sair
-      </Button>
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
+        <PWAInstallButton />
+        <Button 
+          onClick={handleLogout} 
+          variant="outline" 
+          size="sm"
+          className="flex items-center gap-2"
+        >
+          <LogOut size={16} />
+          Sair
+        </Button>
+      </div>
     </div>
   );
 }

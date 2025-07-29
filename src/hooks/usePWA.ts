@@ -1,72 +1,84 @@
-
 import { useState, useEffect } from 'react';
 
-interface PWAHook {
-  isInstalled: boolean;
-  isOnline: boolean;
-  canInstall: boolean;
-  installPrompt: () => Promise<void>;
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
 }
 
-export function usePWA(): PWAHook {
+export const usePWA = () => {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [canInstall, setCanInstall] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useEffect(() => {
-    // Verifica se está instalado
-    const checkInstalled = () => {
+    // Verifica se já está instalado
+    const checkIfInstalled = () => {
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      const isFullscreen = window.matchMedia('(display-mode: fullscreen)').matches;
-      setIsInstalled(isStandalone || isFullscreen);
+      const isIOSStandalone = (window.navigator as any).standalone === true;
+      setIsInstalled(isStandalone || isIOSStandalone);
     };
 
-    checkInstalled();
+    checkIfInstalled();
 
-    // Monitora status online/offline
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    // Event listener para prompt de instalação
+    // Listener para o evento beforeinstallprompt
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e);
-      setCanInstall(true);
+      const promptEvent = e as BeforeInstallPromptEvent;
+      setDeferredPrompt(promptEvent);
+      setIsInstallable(true);
+      console.log('💾 PWA install prompt captured');
+    };
+
+    // Listener para quando o app é instalado
+    const handleAppInstalled = () => {
+      console.log('✅ PWA foi instalado');
+      setIsInstalled(true);
+      setIsInstallable(false);
+      setDeferredPrompt(null);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    // Detecta instalação
-    window.addEventListener('appinstalled', () => {
-      setIsInstalled(true);
-      setCanInstall(false);
-    });
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
-  const installPrompt = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
+  const installPWA = async () => {
+    if (!deferredPrompt) {
+      console.log('❌ Prompt de instalação não disponível');
+      return false;
+    }
+
+    try {
+      await deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      console.log('Install prompt result:', outcome);
-      setDeferredPrompt(null);
-      setCanInstall(false);
+      
+      if (outcome === 'accepted') {
+        console.log('✅ Usuário aceitou instalar o PWA');
+        setIsInstallable(false);
+        setDeferredPrompt(null);
+        return true;
+      } else {
+        console.log('❌ Usuário rejeitou instalar o PWA');
+        return false;
+      }
+    } catch (error) {
+      console.error('❌ Erro ao tentar instalar PWA:', error);
+      return false;
     }
   };
 
   return {
+    isInstallable,
     isInstalled,
-    isOnline,
-    canInstall,
-    installPrompt
+    installPWA,
+    canInstall: isInstallable && !isInstalled
   };
-}
+};

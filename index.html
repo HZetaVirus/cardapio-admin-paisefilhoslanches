@@ -22,19 +22,27 @@
       img-src 'self' data: https: blob: https://*.tile.openstreetmap.org https://cdnjs.cloudflare.com;
       font-src 'self' data:;
       connect-src 'self' https://*.supabase.co https://geladcgknfnqwaozdhxg.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org https://*.tile.openstreetmap.org;
+      worker-src 'self';
+      manifest-src 'self';
       object-src 'none';
       base-uri 'self';
       form-action 'self';
       frame-ancestors 'none';
     ">
 
-    <!-- Admin Theme -->
+    <!-- PWA Configuration -->
     <meta name="theme-color" content="#1e40af">
     <meta name="background-color" content="#f8fafc">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Admin Cardápio">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
     
-    <!-- Favicon -->
+    <!-- Icons -->
     <link rel="icon" type="image/png" href="/lovable-uploads/ac9a4a20-a7e9-4ab9-8416-9296f0410f67.png">
     <link rel="shortcut icon" type="image/png" href="/lovable-uploads/ac9a4a20-a7e9-4ab9-8416-9296f0410f67.png">
+    <link rel="apple-touch-icon" href="/lovable-uploads/ac9a4a20-a7e9-4ab9-8416-9296f0410f67.png">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Admin - Cardápio Digital" />
@@ -50,5 +58,35 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('✅ SW Admin registered successfully:', registration.scope);
+            })
+            .catch(function(registrationError) {
+              console.log('❌ SW Admin registration failed:', registrationError);
+            });
+        });
+      }
+      
+      // PWA Install Prompt
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('💾 PWA install prompt available');
+      });
+      
+      // Debug PWA
+      console.log('🔍 PWA Admin Debug - Checking conditions...');
+      console.log('User Agent:', navigator.userAgent);
+      console.log('Is HTTPS:', location.protocol === 'https:');
+      console.log('Has Service Worker:', 'serviceWorker' in navigator);
+      console.log('Display Mode:', window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : 'browser');
+    </script>
   </body>
 </html>

@@ -1,15 +1,15 @@
 
 {
-  "name": "Cardápio Digital - Faça seu pedido!",
-  "short_name": "Cardápio Digital",
-  "description": "Faça seu pedido com praticidade! PWA responsivo e multiplataforma para Android e iOS.",
+  "name": "Admin - Cardápio Digital",
+  "short_name": "Admin Cardápio",
+  "description": "Painel administrativo do Cardápio Digital - Gerencie pedidos, cardápio e configurações.",
   "start_url": "/?utm_source=pwa",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#fff8e1",
-  "theme_color": "#ff9800",
+  "background_color": "#f8fafc",
+  "theme_color": "#1e40af",
   "display_override": ["standalone", "fullscreen", "minimal-ui"],
-  "categories": ["food", "restaurant", "delivery"],
+  "categories": ["business", "productivity", "food"],
   "prefer_related_applications": false,
   "launch_handler": {
     "client_mode": ["navigate-existing", "auto"]

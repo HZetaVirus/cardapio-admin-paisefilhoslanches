@@ -168,52 +168,53 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    /* Light theme - Moderno e profissional */
+    --background: 0 0% 98%; /* Fundo levemente off-white */
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
+    --card: 0 0% 100%; /* Cards brancos puros */
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%; /* Azul moderno e vibrante */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 210 40% 94%; /* Cinza azulado claro */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 210 40% 94%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 168 76% 42%; /* Verde teal para destaques */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 88%; /* Bordas mais definidas */
+    --input: 0 0% 100%; /* Inputs brancos */
+    --ring: 217.2 91.2% 59.8%; /* Ring com cor primária */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Bordas mais arredondadas */
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 96%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 92%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 214.3 31.8% 88%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* PowerBI Theme Colors */
-    --powerbi-primary: 45 96% 53%;
-    --powerbi-secondary: 210 100% 56%;
-    --powerbi-accent: 168 76% 42%;
-    --powerbi-surface: 0 0% 98%;
+    /* PowerBI Theme Colors - Ajustados para light */
+    --powerbi-primary: 217.2 91.2% 59.8%; /* Azul principal */
+    --powerbi-secondary: 168 76% 42%; /* Verde teal */
+    --powerbi-accent: 45 96% 53%; /* Amarelo para destaques */
+    --powerbi-surface: 0 0% 100%; /* Superfícies brancas */
     --powerbi-surface-variant: 210 40% 96%;
-    --powerbi-border: 214.3 31.8% 91.4%;
+    --powerbi-border: 214.3 31.8% 88%;
   }
 
   .dark {
