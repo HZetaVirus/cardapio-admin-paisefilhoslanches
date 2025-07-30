@@ -90,9 +90,9 @@ O **Cardápio Digital Admin** é um painel administrativo moderno e responsivo d
 - **OSRM** - Cálculo de rotas
 
 ### Outras Integrações
-- **Google Sheets API** - Relatórios externos
 - **RawBT** - Impressão térmica
 - **React Hook Form** - Formulários
+- **XLSX** - Geração de relatórios Excel
 - **Zod** - Validação de schemas
 
 ## 📋 Pré-requisitos

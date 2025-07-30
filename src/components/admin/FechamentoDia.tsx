@@ -3,11 +3,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { CalendarIcon, TrendingUpIcon } from "lucide-react";
+import { CalendarIcon, TrendingUpIcon, DownloadIcon } from "lucide-react";
 import { useApp } from "@/contexts/AppContext";
 import { arquivarPedidosFinalizados } from "@/services/pedidoArchiveService";
-import { enviarFechamentoParaGoogleSheets } from "@/services/googleSheetsService";
 import { toast } from "sonner";
+import * as XLSX from 'xlsx';
 
 export default function FechamentoDia() {
   const { pedidos, setPedidos } = useApp();
@@ -35,28 +35,59 @@ export default function FechamentoDia() {
     };
   };
 
+  const gerarExcelFechamento = () => {
+    const pedidosParaArquivar = getPedidosParaArquivar();
+    const { pedidosConcluidos, pedidosCancelados, totalVendas } = calculateTotals();
+    
+    // Preparar dados dos pedidos
+    const dadosPedidos = pedidosParaArquivar.map(pedido => ({
+      'ID': pedido.id,
+      'Status': pedido.status,
+      'Valor': `R$ ${Number(pedido.valor_total).toFixed(2)}`,
+      'Cliente': pedido.cliente || 'N/A',
+      'Data': new Date(pedido.created_at).toLocaleDateString('pt-BR'),
+      'Hora': new Date(pedido.created_at).toLocaleTimeString('pt-BR'),
+      'Observações': pedido.observacao || ''
+    }));
+
+    // Criar workbook
+    const workbook = XLSX.utils.book_new();
+    
+    // Criar worksheet dos pedidos
+    const worksheetPedidos = XLSX.utils.json_to_sheet(dadosPedidos);
+    XLSX.utils.book_append_sheet(workbook, worksheetPedidos, 'Pedidos');
+
+    // Criar worksheet do resumo
+    const hoje = new Date().toLocaleDateString('pt-BR');
+    const resumoData = [
+      ['RESUMO DO FECHAMENTO'],
+      [''],
+      ['Data:', hoje],
+      ['Hora:', new Date().toLocaleTimeString('pt-BR')],
+      [''],
+      ['ESTATÍSTICAS'],
+      ['Pedidos Concluídos:', pedidosConcluidos],
+      ['Pedidos Cancelados:', pedidosCancelados],
+      ['Total de Pedidos:', pedidosParaArquivar.length],
+      ['Total de Vendas:', `R$ ${totalVendas.toFixed(2)}`],
+    ];
+
+    const worksheetResumo = XLSX.utils.aoa_to_sheet(resumoData);
+    XLSX.utils.book_append_sheet(workbook, worksheetResumo, 'Resumo');
+
+    // Gerar e baixar arquivo
+    const nomeArquivo = `fechamento-${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, nomeArquivo);
+    
+    return nomeArquivo;
+  };
+
   const handleFecharDia = async () => {
     setIsLoading(true);
     try {
-      const totals = calculateTotals();
+      // Gerar e baixar Excel
+      const nomeArquivo = gerarExcelFechamento();
       
-      // Primeiro, enviar dados para Google Sheets
-      const dadosFechamento = {
-        data: new Date().toISOString().split('T')[0],
-        pedidosConcluidos: totals.pedidosConcluidos,
-        pedidosCancelados: totals.pedidosCancelados,
-        totalVendas: totals.totalVendas,
-        totalPedidos: totals.totalPedidos
-      };
-
-      console.log('Enviando fechamento para Google Sheets...');
-      const envioSucesso = await enviarFechamentoParaGoogleSheets(dadosFechamento);
-      
-      if (!envioSucesso) {
-        console.warn('Falha ao enviar para Google Sheets, mas continuando com o arquivamento...');
-        toast.error("Aviso: Dados não foram enviados para a planilha, mas o fechamento continuará.");
-      }
-
       // Arquivar pedidos no banco
       const success = await arquivarPedidosFinalizados();
       
@@ -72,15 +103,10 @@ export default function FechamentoDia() {
         
         setPedidos(pedidosRestantes);
         
-        if (envioSucesso) {
-          toast.success("Dia fechado com sucesso! Dados enviados para a planilha e pedidos arquivados.");
-        } else {
-          toast.success("Dia fechado com sucesso! Pedidos arquivados (verifique a configuração da planilha).");
-        }
-        
+        toast.success(`Fechamento realizado com sucesso! Arquivo ${nomeArquivo} baixado e pedidos arquivados.`);
         console.log(`${pedidosArquivados.length} pedidos foram arquivados e removidos da visualização`);
       } else {
-        toast.error("Erro ao fechar o dia. Tente novamente.");
+        toast.error("Erro ao arquivar pedidos. Tente novamente.");
       }
     } catch (error) {
       console.error('Erro ao fechar dia:', error);
@@ -137,7 +163,14 @@ export default function FechamentoDia() {
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button className="w-full" disabled={isLoading}>
-                {isLoading ? "Fechando..." : "Fechar Dia"}
+                {isLoading ? (
+                  "Processando..."
+                ) : (
+                  <>
+                    <DownloadIcon className="h-4 w-4 mr-2" />
+                    Fechar Dia
+                  </>
+                )}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -154,10 +187,16 @@ export default function FechamentoDia() {
                   Total de vendas: <strong>R$ {totalVendas.toFixed(2)}</strong>
                   <br />
                   <br />
-                  <strong>Os dados serão enviados automaticamente para a planilha do Google Sheets</strong> e os pedidos serão removidos da visualização diária, mas permanecerão disponíveis para relatórios mensais.
+                  <strong>O que acontecerá:</strong>
+                  <br />
+                  • 📥 Arquivo Excel será baixado automaticamente
+                  <br />
+                  • 📦 Pedidos serão arquivados no banco de dados
+                  <br />
+                  • 🧹 Lista será limpa para o próximo dia
                   <br />
                   <br />
-                  Esta ação permitirá que você comece um novo dia limpo, sem os pedidos do dia anterior.
+                  Os pedidos permanecerão disponíveis para relatórios mensais.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -174,11 +213,11 @@ export default function FechamentoDia() {
           </div>
         )}
 
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
-          <p className="text-sm text-yellow-800 dark:text-yellow-200">
-            <strong>Integração Google Sheets:</strong> Os dados do fechamento serão enviados automaticamente 
-            para sua planilha configurada. Certifique-se de que as credenciais estão configuradas corretamente 
-            nas configurações do sistema.
+        <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg border border-green-200 dark:border-green-800">
+          <p className="text-sm text-green-800 dark:text-green-200">
+            <strong>Download Excel:</strong> Ao fechar o dia, um arquivo Excel será gerado 
+            automaticamente com todos os pedidos e um resumo das vendas. Os pedidos serão 
+            arquivados mas permanecerão disponíveis para consultas futuras.
           </p>
         </div>
       </CardContent>
