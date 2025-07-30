@@ -10,7 +10,11 @@ export function ThemeToggle() {
       variant="outline" 
       size="sm"
       onClick={toggleTheme}
-      className="relative flex items-center gap-2 transition-all duration-300 hover:scale-105 overflow-hidden group"
+      className={`relative flex items-center gap-2 transition-all duration-300 hover:scale-105 overflow-hidden group border-2 shadow-sm font-medium ${
+        theme === 'dark' 
+          ? 'border-gray-600 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white' 
+          : 'border-gray-300 bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900'
+      }`}
       title={`Alternar para modo ${theme === 'dark' ? 'claro' : 'escuro'}`}
     >
       <div className="relative flex items-center gap-2">

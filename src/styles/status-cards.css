@@ -1,0 +1,68 @@
+/* Cores específicas para os cards de status - mantém as mesmas cores nos dois modos */
+
+/* Card Pendente - Amarelo/Laranja */
+.status-card-pendente {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: white !important;
+  border: 2px solid #92400e !important;
+}
+
+/* Card Aceito - Azul */
+.status-card-aceito {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  color: white !important;
+  border: 2px solid #1e40af !important;
+}
+
+/* Card Na Chapa - Laranja/Vermelho */
+.status-card-na-chapa {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  color: white !important;
+  border: 2px solid #c2410c !important;
+}
+
+/* Card Saiu da Chapa - Verde */
+.status-card-saiu-chapa {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: white !important;
+  border: 2px solid #047857 !important;
+}
+
+/* Card Concluídos - Verde Escuro */
+.status-card-concluidos {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: white !important;
+  border: 2px solid #065f46 !important;
+}
+
+/* Card Cancelados - Vermelho */
+.status-card-cancelados {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  color: white !important;
+  border: 2px solid #b91c1c !important;
+}
+
+/* Hover effects para todos os cards */
+.status-card-pendente:hover,
+.status-card-aceito:hover,
+.status-card-na-chapa:hover,
+.status-card-saiu-chapa:hover,
+.status-card-concluidos:hover,
+.status-card-cancelados:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Números grandes nos cards */
+.status-card-number {
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Texto dos cards */
+.status-card-text {
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}

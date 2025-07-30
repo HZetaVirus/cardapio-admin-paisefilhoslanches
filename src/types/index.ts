@@ -9,7 +9,6 @@ export interface Cliente {
 export interface Categoria {
   id: number;
   nome_categoria: string;
-  visivel: boolean; // Novo campo para controlar a visibilidade
 }
 
 export interface ItemCardapio {

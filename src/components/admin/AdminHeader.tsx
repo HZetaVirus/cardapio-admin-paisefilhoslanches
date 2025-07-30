@@ -21,24 +21,24 @@ export default function AdminHeader({ onLogout }: AdminHeaderProps) {
   return (
     <div className="flex justify-between items-center mb-4 md:mb-6">
       <div>
-        <h2 className="text-xl md:text-2xl font-bold">Painel do Administrador</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Painel do Administrador</h2>
         {adminUser && (
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-gray-700 dark:text-gray-400 font-medium">
             Logado como: {adminUser.email}
           </p>
         )}
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <ThemeToggle />
         <PWAInstallButton />
         <Button 
           onClick={handleLogout} 
           variant="outline" 
           size="sm"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 border-2 border-gray-300 hover:border-gray-400 bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 shadow-sm"
         >
           <LogOut size={16} />
-          Sair
+          <span className="font-medium">Sair</span>
         </Button>
       </div>
     </div>

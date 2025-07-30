@@ -10,9 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Edit, Trash2, Package, Star, Filter, Eye, EyeOff } from "lucide-react";
+import { Edit, Trash2, Package, Star, Filter } from "lucide-react";
 import { toggleFeaturedStatus, updateItemCardapio, deleteItemCardapio } from "@/services/cardapioService";
-import { toggleCategoriaVisibilidade } from "@/services/categoriaService";
 
 export default function AdminEditarItens() {
   const { cardapio, categorias } = useApp();
@@ -56,29 +55,6 @@ export default function AdminEditarItens() {
     setIsEditDialogOpen(true);
   };
 
-  // Função para alternar a visibilidade da categoria
-  const handleToggleCategoriaVisibilidade = async (categoria: Categoria) => {
-    try {
-      const novoStatus = !categoria.visivel;
-      const success = await toggleCategoriaVisibilidade(categoria.id, novoStatus);
-      
-      if (success) {
-        toast.success(novoStatus ? "Categoria agora está visível no cardápio!" : "Categoria agora está oculta no cardápio!");
-        // Atualizar o estado local em vez de recarregar a página
-        setCategorias(prevCategorias => 
-          prevCategorias.map(cat => 
-            cat.id === categoria.id ? { ...cat, visivel: novoStatus } : cat
-          )
-        );
-      } else {
-        toast.error("Erro ao alterar visibilidade da categoria.");
-      }
-    } catch (error) {
-      console.error('Erro ao alterar visibilidade da categoria:', error);
-      toast.error("Erro ao alterar visibilidade da categoria. Tente novamente.");
-    }
-  };
-
   const handleSaveEdit = async () => {
     if (!selectedItem) return;
 
@@ -99,8 +75,6 @@ export default function AdminEditarItens() {
         toast.success("Item atualizado com sucesso!");
         setIsEditDialogOpen(false);
         setSelectedItem(null);
-        // Recarregar dados do cardápio
-        window.location.reload();
       } else {
         toast.error("Erro ao atualizar item.");
       }
@@ -124,8 +98,6 @@ export default function AdminEditarItens() {
       
       if (success) {
         toast.success("Item excluído com sucesso!");
-        // Recarregar dados do cardápio
-        window.location.reload();
       } else {
         toast.error("Erro ao excluir item. Tente novamente.");
       }
@@ -142,8 +114,6 @@ export default function AdminEditarItens() {
       
       if (success) {
         toast.success(newFeaturedStatus ? "Produto adicionado aos destaques!" : "Produto removido dos destaques!");
-        // Recarregar dados do cardápio
-        window.location.reload();
       } else {
         toast.error("Erro ao alterar status de destaque.");
       }
@@ -203,24 +173,6 @@ export default function AdminEditarItens() {
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                     {categoria.nome_categoria} ({itens.length} {itens.length === 1 ? 'item' : 'itens'})
                   </h3>
-                  <Button
-                    variant={categoria.visivel ? "outline" : "secondary"}
-                    size="sm"
-                    onClick={() => handleToggleCategoriaVisibilidade(categoria)}
-                    className="flex items-center gap-1"
-                  >
-                    {categoria.visivel ? (
-                      <>
-                        <Eye className="h-4 w-4" />
-                        Visível
-                      </>
-                    ) : (
-                      <>
-                        <EyeOff className="h-4 w-4" />
-                        Oculta
-                      </>
-                    )}
-                  </Button>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

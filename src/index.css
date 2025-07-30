@@ -1,5 +1,6 @@
 @import './styles/responsive.css';
 @import './styles/leaflet.css';
+@import './styles/status-cards.css';
 
 @tailwind base;
 @tailwind components;
@@ -168,84 +169,84 @@
 
 @layer base {
   :root {
-    /* Light theme - Moderno e profissional */
-    --background: 0 0% 98%; /* Fundo levemente off-white */
-    --foreground: 222.2 84% 4.9%;
+    /* Light theme - Baseado na imagem clara */
+    --background: 0 0% 95%; /* Fundo cinza claro como na imagem */
+    --foreground: 0 0% 15%; /* Texto escuro */
 
-    --card: 0 0% 100%; /* Cards brancos puros */
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%; /* Cards brancos */
+    --card-foreground: 0 0% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 15%;
 
-    --primary: 217.2 91.2% 59.8%; /* Azul moderno e vibrante */
+    --primary: 217 91% 60%; /* Azul dos cards */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 94%; /* Cinza azulado claro */
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 90%; /* Cinza claro */
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 210 40% 94%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 168 76% 42%; /* Verde teal para destaques */
+    --accent: 142 76% 36%; /* Verde dos cards */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 88%; /* Bordas mais definidas */
-    --input: 0 0% 100%; /* Inputs brancos */
-    --ring: 217.2 91.2% 59.8%; /* Ring com cor primária */
+    --border: 0 0% 85%; /* Bordas suaves */
+    --input: 0 0% 100%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.75rem; /* Bordas mais arredondadas */
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 96%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 92%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 214.3 31.8% 88%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 92%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 85%;
+    --sidebar-ring: 217 91% 60%;
 
-    /* PowerBI Theme Colors - Ajustados para light */
-    --powerbi-primary: 217.2 91.2% 59.8%; /* Azul principal */
-    --powerbi-secondary: 168 76% 42%; /* Verde teal */
-    --powerbi-accent: 45 96% 53%; /* Amarelo para destaques */
-    --powerbi-surface: 0 0% 100%; /* Superfícies brancas */
-    --powerbi-surface-variant: 210 40% 96%;
-    --powerbi-border: 214.3 31.8% 88%;
+    /* PowerBI Theme Colors - Light mode */
+    --powerbi-primary: 217 91% 60%;
+    --powerbi-secondary: 142 76% 36%;
+    --powerbi-accent: 45 96% 50%;
+    --powerbi-surface: 0 0% 100%;
+    --powerbi-surface-variant: 0 0% 96%;
+    --powerbi-border: 0 0% 85%;
   }
 
   .dark {
-    /* Dark theme baseado no design elegante da imagem */
-    --background: 217 33% 8%; /* Azul escuro profundo */
-    --foreground: 210 40% 95%;
+    /* Dark theme - Baseado na imagem escura com fundo azul */
+    --background: 210 50% 12%; /* Fundo azul escuro como na imagem */
+    --foreground: 0 0% 95%; /* Texto claro */
 
-    --card: 217 33% 10%; /* Cards com tom mais claro */
-    --card-foreground: 210 40% 95%;
+    --card: 210 50% 15%; /* Cards com fundo azul mais claro */
+    --card-foreground: 0 0% 95%;
 
-    --popover: 217 33% 10%;
-    --popover-foreground: 210 40% 95%;
+    --popover: 210 50% 15%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 34 89% 56%; /* Laranja vibrante para elementos primários */
-    --primary-foreground: 217 33% 8%;
+    --primary: 217 91% 60%; /* Azul dos cards */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 33% 15%; /* Cinza azulado para elementos secundários */
-    --secondary-foreground: 210 40% 95%;
+    --secondary: 210 50% 20%; /* Azul secundário */
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 217 33% 15%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 50% 18%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 168 76% 42%; /* Verde teal para elementos de destaque */
-    --accent-foreground: 210 40% 98%;
+    --accent: 142 76% 36%; /* Verde dos cards */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 50%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 20%; /* Bordas mais sutis */
-    --input: 217 33% 15%;
-    --ring: 168 76% 42%; /* Ring com cor de destaque */
+    --border: 210 50% 25%; /* Bordas azuis sutis */
+    --input: 210 50% 18%;
+    --ring: 217 91% 60%;
     
     /* Sidebar com tons mais escuros */
     --sidebar-background: 217 33% 6%;
@@ -412,6 +413,24 @@
       0 0 0 1px rgba(255, 255, 255, 0.05) inset;
     transition: all 0.3s ease;
   }
+  
+  /* Cards no modo light */
+  .powerbi-card:not(.dark) {
+    background: hsl(0, 0%, 100%);
+    border: 1px solid hsl(0, 0%, 85%);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Cards no modo dark */
+  .dark .powerbi-card {
+    background: hsl(210, 50%, 15%);
+    border: 1px solid hsl(210, 50%, 25%);
+    box-shadow: 
+      0 4px 6px rgba(0, 0, 0, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 
   .powerbi-card:hover {
     transform: translateY(-2px);
@@ -495,9 +514,20 @@
 
   .powerbi-dashboard {
     @apply min-h-screen;
+    background: hsl(var(--background));
+  }
+  
+  /* Fundo específico para cada modo */
+  .powerbi-dashboard:not(.dark) {
     background: linear-gradient(135deg, 
-      hsl(var(--background)) 0%, 
-      hsl(var(--muted) / 0.3) 100%);
+      hsl(0, 0%, 95%) 0%, 
+      hsl(0, 0%, 92%) 100%);
+  }
+  
+  .dark .powerbi-dashboard {
+    background: linear-gradient(135deg, 
+      hsl(210, 50%, 12%) 0%, 
+      hsl(210, 50%, 10%) 100%);
   }
 
   .powerbi-header {
@@ -506,6 +536,20 @@
       hsl(var(--card)) 0%, 
       hsl(var(--powerbi-surface)) 100%);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header no modo light */
+  .powerbi-header:not(.dark) {
+    background: hsl(0, 0%, 100%);
+    border-bottom: 1px solid hsl(0, 0%, 85%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header no modo dark */
+  .dark .powerbi-header {
+    background: hsl(210, 50%, 15%);
+    border-bottom: 1px solid hsl(210, 50%, 25%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
   .powerbi-tabs {
@@ -551,6 +595,53 @@
       hsl(var(--powerbi-secondary)) 50%,
       hsl(var(--powerbi-accent)) 100%);
   }
+}
+
+/* Estilos específicos para os modos light e dark */
+
+/* Modo Light */
+:root:not(.dark) {
+  --text-primary: hsl(0, 0%, 15%);
+  --text-secondary: hsl(0, 0%, 30%);
+  --text-muted: hsl(0, 0%, 45%);
+}
+
+/* Modo Dark */
+.dark {
+  --text-primary: hsl(0, 0%, 95%);
+  --text-secondary: hsl(0, 0%, 80%);
+  --text-muted: hsl(0, 0%, 70%);
+}
+
+/* Botões com melhor contraste */
+.btn-admin-contrast {
+  transition: all 0.2s ease;
+}
+
+.btn-admin-contrast:not(.dark) {
+  background: hsl(0, 0%, 100%);
+  border: 2px solid hsl(0, 0%, 80%);
+  color: hsl(0, 0%, 15%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-admin-contrast:not(.dark):hover {
+  background: hsl(0, 0%, 96%);
+  border-color: hsl(0, 0%, 70%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dark .btn-admin-contrast {
+  background: hsl(210, 50%, 18%);
+  border: 2px solid hsl(210, 50%, 30%);
+  color: hsl(0, 0%, 95%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark .btn-admin-contrast:hover {
+  background: hsl(210, 50%, 22%);
+  border-color: hsl(210, 50%, 35%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* Mobile touch improvements and PWA optimizations */

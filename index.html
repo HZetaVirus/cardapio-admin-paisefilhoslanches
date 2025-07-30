@@ -8,27 +8,9 @@
     <meta name="description" content="Painel administrativo do Cardápio Digital - Gerencie pedidos, cardápio e configurações." />
     <meta name="keywords" content="admin, dashboard, gestão, restaurante, pedidos" />
 
-    <!-- Security Headers via Meta Tags -->
+    <!-- Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-    
-    <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="
-      default-src 'self';
-      script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://supabase.com;
-      style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
-      img-src 'self' data: https: blob: https://*.tile.openstreetmap.org https://cdnjs.cloudflare.com;
-      font-src 'self' data:;
-      connect-src 'self' https://*.supabase.co https://geladcgknfnqwaozdhxg.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org https://*.tile.openstreetmap.org;
-      worker-src 'self';
-      manifest-src 'self';
-      object-src 'none';
-      base-uri 'self';
-      form-action 'self';
-      frame-ancestors 'none';
-    ">
 
     <!-- PWA Configuration -->
     <meta name="theme-color" content="#1e40af">
@@ -51,8 +33,8 @@
     <meta property="og:description" content="Painel administrativo do Cardápio Digital" />
     
     <!-- Preload Critical Resources -->
-    <link rel="preload" href="/src/main.tsx" as="script">
-    <link rel="preload" href="/src/index.css" as="style">
+    <link rel="preload" href="/src/main.tsx" as="script" crossorigin>
+    <link rel="preload" href="/src/index.css" as="style" crossorigin>
   </head>
 
   <body>

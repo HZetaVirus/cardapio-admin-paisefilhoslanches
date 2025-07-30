@@ -12,11 +12,11 @@ import AdminPrinterStatus from "./admin/AdminPrinterStatus";
 import DeliveryManagement from "./DeliveryManagement";
 
 import { useAdminViewLogic } from "./admin/AdminViewLogic";
-import { usePWANotifications } from "@/hooks/usePWANotifications";
+
 import { useApp } from "@/contexts/AppContext";
-import PWANotificationSettings from "./PWANotificationSettings";
-import PWADebugInfo from "./PWADebugInfo";
+
 import AdminThemeProvider from "./AdminThemeProvider";
+
 
 export default function AdminView() {
   const { pedidos } = useApp();
@@ -37,8 +37,7 @@ export default function AdminView() {
     logout
   } = useAdminViewLogic();
 
-  // Ativa notificações PWA para novos pedidos
-  usePWANotifications(pedidos);
+
 
   return (
     <div className="powerbi-dashboard">
@@ -92,8 +91,6 @@ export default function AdminView() {
             <div className="space-y-6">
               <FechamentoDia />
               <AdminStoreSettings />
-              <PWANotificationSettings />
-              <PWADebugInfo />
             </div>
           </TabsContent>
         </Tabs>

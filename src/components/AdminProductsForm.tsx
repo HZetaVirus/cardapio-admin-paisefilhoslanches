@@ -56,8 +56,7 @@ export default function AdminProductsForm() {
       const sanitizedName = sanitizeText(categoryName);
       const novaCategoria = await supabaseService.insertCategoria({ nome_categoria: sanitizedName });
       if (novaCategoria) {
-        // Atualizar a lista de categorias no contexto
-        window.location.reload(); // Recarregar para atualizar as categorias
+        // A lista de categorias será atualizada automaticamente via contexto
         return novaCategoria.id;
       }
       return null;

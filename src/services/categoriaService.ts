@@ -22,8 +22,7 @@ export const insertCategoria = async (categoria: Omit<Categoria, 'id'>): Promise
     const { data, error } = await supabase
       .from('categorias')
       .insert({
-        nome_categoria: categoria.nome_categoria,
-        visivel: categoria.visivel ?? true // Por padrão, a categoria é visível
+        nome_categoria: categoria.nome_categoria
       })
       .select()
       .single();
@@ -34,22 +33,5 @@ export const insertCategoria = async (categoria: Omit<Categoria, 'id'>): Promise
     }
     
     return data as Categoria;
-  });
-};
-
-// Nova função para alternar a visibilidade da categoria
-export const toggleCategoriaVisibilidade = async (categoriaId: number, visivel: boolean): Promise<boolean> => {
-  return await withDDoSProtection(async () => {
-    const { error } = await supabase
-      .from('categorias')
-      .update({ visivel })
-      .eq('id', categoriaId);
-    
-    if (error) {
-      console.error('Erro ao alterar visibilidade da categoria:', error);
-      return false;
-    }
-    
-    return true;
   });
 };

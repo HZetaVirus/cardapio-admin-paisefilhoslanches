@@ -8,3 +8,5 @@ export * from './avaliacaoService';
 export * from './configuracaoLojaService';
 export * from './adicionaisService';
 export * from './baseService';
+
+

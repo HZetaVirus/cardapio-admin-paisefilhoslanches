@@ -22,7 +22,7 @@ const PWAInstallButton: React.FC = () => {
 
   if (isInstalled) {
     return (
-      <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+      <div className="flex items-center gap-2 text-sm px-3 py-1.5 bg-green-100 text-green-800 rounded-md border border-green-200 font-medium">
         <Smartphone className="h-4 w-4" />
         <span>App instalado</span>
       </div>
@@ -38,7 +38,7 @@ const PWAInstallButton: React.FC = () => {
       onClick={handleInstall}
       variant="outline"
       size="sm"
-      className="flex items-center gap-2"
+      className="flex items-center gap-2 border-2 border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-700 hover:text-blue-900 shadow-sm font-medium"
     >
       <Download className="h-4 w-4" />
       Instalar App
